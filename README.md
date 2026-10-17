@@ -1,4 +1,4 @@
-# PARCIAL 2 - INGENIERÍA DE SOFTWARE 2
+# SEGUIMIENTO 2 - INGENIERÍA DE SOFTWARE 2
 
 ## Sistema Nexus Core: Plataforma de Auditoría y Gestión de Proyectos de Software
 
