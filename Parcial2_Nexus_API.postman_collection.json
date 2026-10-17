@@ -1,0 +1,216 @@
+{
+  "info": {
+    "_postman_id": "7b8e19c4-893d-4c31-b6a4-47a3e72c81e9",
+    "name": "Parcial 2 - Ingenieria de Software 2 - Nexus Core API",
+    "description": "Coleccion oficial de 4 consultas REST para el Parcial 2 de Ingenieria de Software 2.\nTema: Nexus Core - Sistema de Gestion y Monitoreo de Proyectos de Software.\nServidor por defecto: http://localhost:5000\nNota: Cero emojis incluidos. Todas las consultas cuentan con pruebas automatizadas (Tests).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Consulta 1: Listar Todos los Proyectos (GET /api/projects)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Codigo de estado es 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Respuesta en formato JSON valido\", function () {",
+              "    pm.response.to.be.json;",
+              "});",
+              "pm.test(\"Contiene lista de proyectos y metadatos de auditoria\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.be.an(\"array\");",
+              "    pm.expect(jsonData.total).to.be.above(0);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/projects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "projects"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "active",
+              "description": "Filtro opcional por estado: active, in_review, completed, planned",
+              "disabled": true
+            }
+          ]
+        },
+        "description": "Consulta 1: Retorna el inventario consolidado de proyectos de software con indicadores de avance, metodologia, arquitectura y salud del codigo."
+      },
+      "response": []
+    },
+    {
+      "name": "Consulta 2: Detalle y Metricas de Calidad de un Proyecto (GET /api/projects/:id)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Codigo de estado es 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Estructura de metricas tecnicas presente\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data.metrics).to.have.property(\"coverage\");",
+              "    pm.expect(jsonData.data.metrics).to.have.property(\"maintainability\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/projects/PRJ-101",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "projects",
+            "PRJ-101"
+          ]
+        },
+        "description": "Consulta 2: Obtiene la ficha tecnica y telemetria profunda de un proyecto en particular por su identificador unico (ej: PRJ-101)."
+      },
+      "response": []
+    },
+    {
+      "name": "Consulta 3: Registrar Nuevo Proyecto de Software (POST /api/projects)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Codigo de estado es 201 Created\", function () {",
+              "    pm.response.to.have.status(201);",
+              "});",
+              "pm.test(\"El proyecto fue creado con ID asignado\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.have.property(\"id\");",
+              "    pm.expect(jsonData.data.name).to.eql(\"Sistema de Auditoria Distribuida\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Sistema de Auditoria Distribuida\",\n  \"leadDeveloper\": \"Ing. Carlos Mendoza\",\n  \"methodology\": \"Scrum\",\n  \"repositoryUrl\": \"https://github.com/empresa/audit-core.git\",\n  \"status\": \"active\",\n  \"priority\": \"Alta\",\n  \"techStack\": [\"Node.js\", \"PostgreSQL\", \"Docker\", \"RabbitMQ\"],\n  \"budget\": 38500,\n  \"currentSprint\": 4\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/projects",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "projects"
+          ]
+        },
+        "description": "Consulta 3: Realiza una peticion POST para dar de alta un nuevo proyecto de ingenieria de software, validando el esquema JSON y retornando status 201."
+      },
+      "response": []
+    },
+    {
+      "name": "Consulta 4: Reporte de Rendimiento y Calidad Global (GET /api/reports/analytics)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Codigo de estado es 200 OK\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "pm.test(\"Reporte contiene indicadores globales de ingenieria\", function () {",
+              "    var jsonData = pm.response.json();",
+              "    pm.expect(jsonData.success).to.eql(true);",
+              "    pm.expect(jsonData.data).to.have.property(\"averageCodeCoverage\");",
+              "    pm.expect(jsonData.data).to.have.property(\"slaComplianceRate\");",
+              "    pm.expect(jsonData.data).to.have.property(\"distributionByStatus\");",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reports/analytics",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reports",
+            "analytics"
+          ]
+        },
+        "description": "Consulta 4: Genera un reporte analitico global para direccion de ingenieria: cobertura promedio de codigo, cumplimiento de SLA, vulnerabilidades resueltas y distribucion metodologica."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ]
+}

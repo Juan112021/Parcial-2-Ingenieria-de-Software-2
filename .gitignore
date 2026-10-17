@@ -1,0 +1,5 @@
+# Git Ignore para Nexus Core
+.system_generated/
+*.log
+scratch/
+test_post.json
