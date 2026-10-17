@@ -321,7 +321,9 @@ async function checkBackendStatus() {
     isServerOnline = false;
     backendStatusPill.style.background = 'rgba(56, 189, 248, 0.12)';
     backendStatusPill.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-    backendStatusText.textContent = 'Modo Simulación API (Standby)';
+    backendStatusText.textContent = window.location.hostname.includes('github.io') 
+      ? 'API Mock Engine Activo (GitHub Pages)' 
+      : 'Modo Simulación API (Standby)';
   }
 }
 

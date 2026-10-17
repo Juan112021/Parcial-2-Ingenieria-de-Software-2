@@ -6,6 +6,7 @@
 **Asignatura:** Ingeniería de Software 2  
 **Nivel Académico:** Sexto Semestre  
 **Repositorio Oficial en GitHub:** [https://github.com/Juan112021/Parcial-2-Ingenieria-de-Software-2](https://github.com/Juan112021/Parcial-2-Ingenieria-de-Software-2)  
+**Sitio Web en Vivo (GitHub Pages):** [https://juan112021.github.io/Parcial-2-Ingenieria-de-Software-2/](https://juan112021.github.io/Parcial-2-Ingenieria-de-Software-2/)  
 
 ### Requisitos Académicos Cumplidos:
 1. Interfaz web moderna de alto impacto visual con diseño Dark Glassmorphism y **múltiples animaciones suavizadas**.
